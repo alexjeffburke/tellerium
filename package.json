@@ -1,0 +1,35 @@
+{
+  "name": "tellerium",
+  "version": "0.0.0",
+  "description": "",
+  "main": "lib/Tellerium.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "lint": "eslint . && prettier --check '**/*.{js,ts}'",
+    "test": "npm-run-all --parallel --race test:serve test:mocha",
+    "test:mocha": "mocha",
+    "test:serve": "serve -l 8080 testdata"
+  },
+  "author": "Alex J Burke <alex@alexjeffburke.com>",
+  "license": "MIT",
+  "dependencies": {
+    "selenium-webdriver": "^3.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-config-standard": "^13.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-mocha": "^6.0.0",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "mocha": "^6.2.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "~1.18.2",
+    "serve": "^11.1.0",
+    "unexpected": "^11.7.0"
+  }
+}
