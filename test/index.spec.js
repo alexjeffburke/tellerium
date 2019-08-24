@@ -1,13 +1,15 @@
 const path = require("path");
-const Tellerium = require("../lib/tellerium");
+
+const Tellerium = require("../lib/index");
 
 const TEST_DATA = path.join(__dirname, "..", "testdata");
 
-const sidedriver = new Tellerium({
-  testFile: path.join(TEST_DATA, "example.side")
-});
+const sidedriver = Tellerium.fromFile(
+  path.join(TEST_DATA, "example.side"),
+  "side"
+);
 
-describe("Tellerium", function() {
+describe("index", function() {
   this.timeout(10000);
 
   before(() => {
