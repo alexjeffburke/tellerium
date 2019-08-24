@@ -17,6 +17,16 @@ describe("index", () => {
       );
     });
 
+    it("should not allow an arbitrary file extension for side files", () => {
+      expect(
+        () => {
+          Tellerium.fromFile(path.join(TEST_DATA, "example.txt"), "side");
+        },
+        "to throw",
+        "Tellerium: specified test file is not from Selenium IDE"
+      );
+    });
+
     it("should not allow a nonexistent path", () => {
       expect(
         () => {
