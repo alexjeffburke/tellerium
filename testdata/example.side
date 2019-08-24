@@ -58,6 +58,23 @@
                         ]
                     ],
                     "value": ""
+                },
+                {
+                    "command": "type",
+                    "comment": "",
+                    "id": "09f93a1e-0301-4d15-9d53-d760a8e1884b",
+                    "target": "css=textarea",
+                    "targets": [
+                        [
+                            "css=textarea",
+                            "css"
+                        ],
+                        [
+                            "xpath=//textarea",
+                            "xpath:position"
+                        ]
+                    ],
+                    "value": "foobar"
                 }
             ],
             "id": "f688e544-de09-419f-9dbc-6a2ed0623ddf",
