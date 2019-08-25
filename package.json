@@ -2,7 +2,7 @@
   "name": "tellerium",
   "version": "0.0.0",
   "description": "",
-  "main": "lib/Tellerium.js",
+  "main": "lib/index.js",
   "directories": {
     "lib": "lib"
   },
