@@ -107,7 +107,7 @@ describe("index", () => {
     });
 
     after(() => {
-      return sidedriver.destoryEnvironment();
+      return sidedriver.destroyEnvironment();
     });
 
     it("should work", () => {
