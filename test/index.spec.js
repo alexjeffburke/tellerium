@@ -58,6 +58,20 @@ describe("index", () => {
     });
   });
 
+  describe("when the instance has been instantiated", () => {
+    it("should not allow running a test before createEnvironment() is called", () => {
+      const instance = new tellerium.Tellerium({
+        testCases: [{ name: "exampletest" }]
+      });
+
+      expect(
+        () => instance.runTest("exampletest"),
+        "to be rejected with",
+        "Tellerium: attempt to run a test before creating environment"
+      );
+    });
+  });
+
   describe("when exeucuting an example side file", function() {
     this.timeout(10000);
 
