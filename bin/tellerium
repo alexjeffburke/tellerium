@@ -1,0 +1,48 @@
+#!/usr/bin/env node
+
+const wrap = require("@gustavnikolaj/async-main-wrap");
+const Mocha = require("mocha");
+const path = require("path");
+
+const tellerium = require("../lib/index");
+
+exports.execute = ({ filePath, format }) => {
+  const mocha = new Mocha({});
+  mocha.ui("exports");
+
+  const instance = tellerium.fromFile(filePath, format);
+  const testCases = instance.testCases;
+
+  const testExports = {
+    before: () => instance.createEnvironment(),
+    after: () => instance.destroyEnvironment()
+  };
+  for (const testCase of testCases) {
+    testExports[testCase.name] = () => {
+      return instance.runTest(testCase.name);
+    };
+  }
+
+  // register the test cases
+  mocha.suite.emit("require", testExports, filePath);
+
+  return new Promise(resolve => {
+    mocha.run(() => {
+      resolve();
+    });
+  });
+};
+
+const main = cwd => {
+  const command = "execute";
+  const argv = process.argv.slice(2);
+
+  const args = {
+    filePath: path.resolve(cwd, argv[0]),
+    format: argv[1]
+  };
+
+  return exports[command](args);
+};
+
+wrap(main)(process.cwd());

@@ -9,7 +9,9 @@
   "scripts": {
     "coverage": "nyc --reporter lcov --reporter text npm test",
     "lint": "eslint . && prettier --check '**/*.{js,ts}'",
-    "test": "npm-run-all --parallel --race test:serve test:mocha",
+    "test": "npm-run-all --parallel --race test:serve test:all",
+    "test:all": "npm run test:mocha && npm run test:integration",
+    "test:integration": "mocha test/integration/*.spec.js",
     "test:mocha": "mocha",
     "test:serve": "serve -l 8080 testdata"
   },
@@ -19,6 +21,7 @@
     "selenium-webdriver": "^3.6.0"
   },
   "devDependencies": {
+    "@gustavnikolaj/async-main-wrap": "^3.0.1",
     "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-config-standard": "^13.0.1",
