@@ -70,6 +70,28 @@ describe("index", () => {
         "Tellerium: attempt to run a test before creating environment"
       );
     });
+
+    it("should not allow running a test when none exist", () => {
+      const instance = new tellerium.Tellerium({});
+
+      expect(
+        () => instance.runTest("exampletest"),
+        "to be rejected with",
+        'Tellerium: unable to find test "exampletest"'
+      );
+    });
+
+    it("should not allow running a test it does not exist", () => {
+      const instance = new tellerium.Tellerium({
+        testCases: [{ name: "sometest" }]
+      });
+
+      expect(
+        () => instance.runTest("othertest"),
+        "to be rejected with",
+        'Tellerium: unable to find test "othertest"'
+      );
+    });
   });
 
   describe("when exeucuting an example side file", function() {
