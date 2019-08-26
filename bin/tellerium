@@ -7,9 +7,10 @@ const yargs = require("yargs");
 
 const tellerium = require("../lib/index");
 
-exports.execute = ({ filePath, format }) => {
+exports.execute = ({ filePath, format, timeout }) => {
   const mocha = new Mocha({});
   mocha.ui("exports");
+  mocha.timeout(timeout);
 
   const instance = tellerium.fromFile(filePath, format);
   const testCases = instance.testCases;
@@ -45,6 +46,12 @@ const configureArgs = () => yargs =>
       demand: true,
       choices: ["side"],
       describe: "The format of the input test file."
+    })
+    .option("timeout", {
+      type: "number",
+      default: 10000,
+      describe:
+        "Specify a timeout in ms that should apply when executing tests."
     });
 
 const processArgs = () =>
@@ -63,7 +70,8 @@ const main = cwd => {
 
   const args = {
     filePath: path.resolve(cwd, argv.filePath),
-    format: argv.type
+    format: argv.type,
+    timeout: argv.timeout
   };
 
   return exports[command](args);
