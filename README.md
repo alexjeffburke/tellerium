@@ -2,6 +2,8 @@
 
 This module provides facilities for execution of captured browser tests.
 
+[![NPM version](https://img.shields.io/npm/v/tellerium.svg)](https://www.npmjs.com/package/tellerium)
+
 The only file format currently supported is output from Selenium IDE.
 Files in this format can be loaded directly, validated and executed.
 
