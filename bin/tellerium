@@ -7,12 +7,33 @@ const yargs = require("yargs");
 
 const tellerium = require("../lib/index");
 
-exports.execute = ({ filePath, format, timeout }) => {
+const argvToOptions = argv => {
+  if (argv.selenium) {
+    return {
+      adapter: "selenium"
+    };
+  } else if (argv.ramble) {
+    return {
+      adapter: "puppeteer",
+      adapterOptions: {
+        headless: false
+      }
+    };
+  } else {
+    // defaults
+    return {
+      adapter: "puppeteer"
+    };
+  }
+};
+
+exports.execute = ({ filePath, format, timeout }, argv) => {
   const mocha = new Mocha({});
   mocha.ui("exports");
   mocha.timeout(timeout);
 
-  const instance = tellerium.fromFile(filePath, format);
+  const options = argvToOptions(argv);
+  const instance = tellerium.fromFile(filePath, format, options);
   const testCases = instance.testCases;
 
   const testExports = {
@@ -52,6 +73,18 @@ const configureArgs = () => yargs =>
       default: 10000,
       describe:
         "Specify a timeout in ms that should apply when executing tests."
+    })
+    .option("ramble", {
+      type: "boolean",
+      describe: "Execute with non-headless puppeteer."
+    })
+    .option("selenium", {
+      type: "boolean",
+      describe: "Execute with selenium webdriver."
+    })
+    .conflicts({
+      ramble: "selenium",
+      selenium: "ramble"
     });
 
 const processArgs = () =>
@@ -74,7 +107,7 @@ const main = cwd => {
     timeout: argv.timeout
   };
 
-  return exports[command](args);
+  return exports[command](args, argv);
 };
 
 wrap(main)(process.cwd());

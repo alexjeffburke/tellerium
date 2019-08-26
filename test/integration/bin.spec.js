@@ -66,13 +66,35 @@ function spawnCli(options) {
 }
 
 describe("bin - integration", () => {
-  it("should have created the module folder", () => {
+  it("should use headless puppeteer", () => {
     const testFile = path.join(TEST_DATA, "example.side");
 
     return spawnCli({
       cwd: process.cwd(),
       bin: BIN_FILE,
       args: [testFile, "--type", "side"]
+    });
+  });
+
+  it("should use non-headless puppeteer", () => {
+    const testFile = path.join(TEST_DATA, "example.side");
+
+    return spawnCli({
+      cwd: process.cwd(),
+      bin: BIN_FILE,
+      args: [testFile, "--type", "side", "--ramble"]
+    });
+  });
+
+  it("should use selenium webdriver", function() {
+    this.timeout(4000);
+
+    const testFile = path.join(TEST_DATA, "example.side");
+
+    return spawnCli({
+      cwd: process.cwd(),
+      bin: BIN_FILE,
+      args: [testFile, "--type", "side", "--selenium"]
     });
   });
 });
