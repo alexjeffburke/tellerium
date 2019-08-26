@@ -28,6 +28,7 @@
   "dependencies": {
     "@gustavnikolaj/async-main-wrap": "^3.0.1",
     "mocha": "^6.2.0",
+    "puppeteer": "^1.19.0",
     "selenium-webdriver": "^3.6.0"
   },
   "devDependencies": {

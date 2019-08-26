@@ -107,12 +107,35 @@ describe("index", () => {
     });
   });
 
-  describe("when exeucuting an example side file", function() {
+  describe("when exeucuting in pupeteer", function() {
     this.timeout(10000);
 
     const sidedriver = tellerium.fromFile(
       path.join(TEST_DATA, "example.side"),
-      "side"
+      "side",
+      { adapter: "puppeteer" }
+    );
+
+    before(() => {
+      return sidedriver.createEnvironment();
+    });
+
+    after(() => {
+      return sidedriver.destroyEnvironment();
+    });
+
+    it("should work", () => {
+      return sidedriver.runTest("example");
+    });
+  });
+
+  describe("when exeucuting in selenium", function() {
+    this.timeout(10000);
+
+    const sidedriver = tellerium.fromFile(
+      path.join(TEST_DATA, "example.side"),
+      "side",
+      { adapter: "selenium" }
     );
 
     before(() => {
