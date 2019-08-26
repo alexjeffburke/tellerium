@@ -26,11 +26,11 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@gustavnikolaj/async-main-wrap": "^3.0.1",
     "mocha": "^6.2.0",
     "selenium-webdriver": "^3.6.0"
   },
   "devDependencies": {
-    "@gustavnikolaj/async-main-wrap": "^3.0.1",
     "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-config-standard": "^13.0.1",
