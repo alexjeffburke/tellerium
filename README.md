@@ -7,6 +7,8 @@ This module provides facilities for execution of captured browser tests.
 The only file format currently supported is output from Selenium IDE.
 Files in this format can be loaded directly, validated and executed.
 
+> tests are executed headless in puppeteer by default
+
 ## Use
 
 ### CLI
@@ -74,9 +76,12 @@ const instance = new tellerium.Tellerium({
 });
 ```
 
-## Execution
+## Options
 
-Tests are executed by issuing commands via a selenium webdriver.
+Test execution can be customised by provided additonal options. While
+the module defaults to headless puppeteer, seeing the output visually
+can be requested by supplying the `--ramble` option. Execution of the
+tests via a selenium webdriver is also supported via `--selenium`.
 
 ## Support
 
