@@ -72,7 +72,7 @@ describe("bin - integration", () => {
     return spawnCli({
       cwd: process.cwd(),
       bin: BIN_FILE,
-      args: [testFile, "side"]
+      args: [testFile, "--type", "side"]
     });
   });
 });
