@@ -58,9 +58,21 @@ describe("index", () => {
     });
   });
 
-  describe("when the instance has been instantiated", () => {
+  describe("when instantiated", () => {
+    it("should not allow a missing adapter", () => {
+      expect(
+        () => {
+          // eslint-disable-next-line no-new
+          new tellerium.Tellerium();
+        },
+        "to throw",
+        "Tellerium: unsupported adapter"
+      );
+    });
+
     it("should not allow running a test before createEnvironment() is called", () => {
       const instance = new tellerium.Tellerium({
+        adapter: "selenium",
         testCases: [{ name: "exampletest" }]
       });
 
@@ -72,7 +84,7 @@ describe("index", () => {
     });
 
     it("should not allow running a test when none exist", () => {
-      const instance = new tellerium.Tellerium({});
+      const instance = new tellerium.Tellerium({ adapter: "selenium" });
 
       expect(
         () => instance.runTest("exampletest"),
@@ -83,6 +95,7 @@ describe("index", () => {
 
     it("should not allow running a test it does not exist", () => {
       const instance = new tellerium.Tellerium({
+        adapter: "selenium",
         testCases: [{ name: "sometest" }]
       });
 
