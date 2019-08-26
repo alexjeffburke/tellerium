@@ -3,6 +3,7 @@
 const wrap = require("@gustavnikolaj/async-main-wrap");
 const Mocha = require("mocha");
 const path = require("path");
+const yargs = require("yargs");
 
 const tellerium = require("../lib/index");
 
@@ -33,13 +34,36 @@ exports.execute = ({ filePath, format }) => {
   });
 };
 
+const configureArgs = () => yargs =>
+  yargs
+    .positional("filePath", {
+      type: "string",
+      describe: "The test file to be executed."
+    })
+    .option("type", {
+      type: "string",
+      demand: true,
+      choices: ["side"],
+      describe: "The format of the input test file."
+    });
+
+const processArgs = () =>
+  yargs
+    .usage("$0 <cmd> [args]")
+    .command(
+      ["* <filePath>", "execute <filePath>"],
+      "Run tests supplied in the given test file.",
+      configureArgs()
+    )
+    .help().argv;
+
 const main = cwd => {
-  const command = "execute";
-  const argv = process.argv.slice(2);
+  const argv = processArgs();
+  const command = argv._[0] || "execute";
 
   const args = {
-    filePath: path.resolve(cwd, argv[0]),
-    format: argv[1]
+    filePath: path.resolve(cwd, argv.filePath),
+    format: argv.type
   };
 
   return exports[command](args);
