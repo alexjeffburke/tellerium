@@ -20,6 +20,10 @@
     "test:serve": "serve -l 8080 testdata"
   },
   "author": "Alex J Burke <alex@alexjeffburke.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexjeffburke/tellerium.git"
+  },
   "license": "MIT",
   "dependencies": {
     "mocha": "^6.2.0",
