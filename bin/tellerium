@@ -27,6 +27,15 @@ const argvToOptions = argv => {
   }
 };
 
+const attemptExecuteHook = (instance, hookName) => {
+  return instance.runTest(hookName).catch(err => {
+    if (err.name === "MissingTestError") {
+      return null;
+    }
+    throw err;
+  });
+};
+
 exports.execute = ({ filePath, format, timeout }, argv) => {
   const mocha = new Mocha({});
   mocha.ui("exports");
@@ -37,10 +46,21 @@ exports.execute = ({ filePath, format, timeout }, argv) => {
   const testCases = instance.testCases;
 
   const testExports = {
-    before: () => instance.createEnvironment(),
-    after: () => instance.destroyEnvironment()
+    before: () =>
+      instance.createEnvironment().then(() => {
+        return attemptExecuteHook(instance, "__before");
+      }),
+    after: () =>
+      Promise.resolve()
+        .then(() => attemptExecuteHook(instance, "__after"))
+        .then(() => instance.destroyEnvironment())
   };
-  for (const testCase of testCases) {
+
+  const testCasesWithoutHooks = testCases.filter(
+    testCase => !["__before", "__after"].includes(testCase.name)
+  );
+
+  for (const testCase of testCasesWithoutHooks) {
     testExports[testCase.name] = () => {
       return instance.runTest(testCase.name);
     };

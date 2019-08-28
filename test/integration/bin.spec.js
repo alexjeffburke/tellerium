@@ -77,6 +77,16 @@ describe("bin - integration", () => {
     });
   });
 
+  it("should support test that have hooks", function() {
+    const testFile = path.join(TEST_DATA, "hooks.side");
+
+    return spawnCli({
+      cwd: process.cwd(),
+      bin: BIN_FILE,
+      args: [testFile, "--type", "side"]
+    });
+  });
+
   it("should use non-headless puppeteer", () => {
     const testFile = path.join(TEST_DATA, "example.side");
 
