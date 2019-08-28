@@ -1,0 +1,55 @@
+{
+    "id": "ce1ca265-19ca-4546-a1e2-407b0c24b43c",
+    "name": "test",
+    "plugins": [],
+    "suites": [
+        {
+            "id": "4d6ad16f-7340-45b7-a9d3-d9d1458b69c2",
+            "name": "Default Suite",
+            "parallel": false,
+            "persistSession": false,
+            "tests": [
+                "f688e544-de09-419f-9dbc-6a2ed0623ddf"
+            ],
+            "timeout": 300
+        }
+    ],
+    "tests": [
+        {
+            "commands": [
+                {
+                    "command": "open",
+                    "comment": "",
+                    "id": "01b0b9dc-337a-40bb-9226-244eadc34280",
+                    "target": "",
+                    "targets": [],
+                    "value": "localhost:8080/example"
+                },
+                {
+                    "command": "waitForElementVisible",
+                    "comment": "",
+                    "id": "9fe2fe85-a0fb-4843-a9db-577c0d70f37e",
+                    "target": "css=object",
+                    "targets": [
+                        [
+                            "css=object",
+                            "css"
+                        ],
+                        [
+                            "xpath=//object",
+                            "xpath:position"
+                        ]
+                    ],
+                    "value": "1500"
+                }
+            ],
+            "id": "f688e544-de09-419f-9dbc-6a2ed0623ddf",
+            "name": "example"
+        }
+    ],
+    "url": "http://localhost:8080",
+    "urls": [
+        "http://localhost:8080"
+    ],
+    "version": "1.1"
+}

@@ -1,3 +1,4 @@
+const expect = require("unexpected");
 const path = require("path");
 const spawn = require("child_process").spawn;
 
@@ -96,5 +97,35 @@ describe("bin - integration", () => {
       bin: BIN_FILE,
       args: [testFile, "--type", "side", "--selenium"]
     });
+  });
+
+  it("should error with exit code on failure", () => {
+    const testFile = path.join(TEST_DATA, "failing.side");
+
+    return expect(
+      () =>
+        spawnCli({
+          cwd: process.cwd(),
+          bin: BIN_FILE,
+          args: [testFile, "--type", "side"]
+        }),
+      "to be rejected with",
+      { code: 1 }
+    );
+  });
+
+  it("should error with a nice message on failure", () => {
+    const testFile = path.join(TEST_DATA, "failing.side");
+
+    return expect(
+      () =>
+        spawnCli({
+          cwd: process.cwd(),
+          bin: BIN_FILE,
+          args: [testFile, "--type", "side"]
+        }),
+      "to be rejected with",
+      { stderr: expect.it("to contain", "Some failing tests were recorded: 1") }
+    );
   });
 });

@@ -49,9 +49,13 @@ exports.execute = ({ filePath, format, timeout }, argv) => {
   // register the test cases
   mocha.suite.emit("require", testExports, filePath);
 
-  return new Promise(resolve => {
-    mocha.run(() => {
-      resolve();
+  return new Promise((resolve, reject) => {
+    mocha.run(failureCount => {
+      if (failureCount > 0) {
+        reject(new Error(`Some failing tests were recorded: ${failureCount}`));
+      } else {
+        resolve();
+      }
     });
   });
 };
