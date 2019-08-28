@@ -7,6 +7,12 @@ This module provides facilities for execution of captured browser tests.
 The only file format currently supported is output from Selenium IDE.
 Files in this format can be loaded directly, validated and executed.
 
+Tests can be exdecuted by the following engines:
+
+- Chromium (via Puppeteer)
+- Selenium Webdriver
+- Browsertack (using Selenium)
+
 > tests are executed headless in puppeteer by default
 
 ## Use
@@ -82,6 +88,24 @@ Test execution can be customised by provided additonal options. While
 the module defaults to headless puppeteer, seeing the output visually
 can be requested by supplying the `--ramble` option. Execution of the
 tests via a selenium webdriver is also supported via `--selenium`.
+
+### BrowerStack
+
+The module also has preliminary support for testing in BrowserStack.
+This can be configuried by using the `--browserstack` option and then
+invoking the binary with the following two environment variables:
+
+- BROWSERSTACK_USERNAME - the user to connect with
+- BROWSERSTACK_KEY - the API key for this user
+
+An example invocation of this is as follows:
+
+```
+BROWSERSTACK_USERNAME=user BROWSERSTACK_KEY=xxx ./bin/tellerium --browserstack --type side ./example.side
+```
+
+_Currently the module will select Chrome running on an arbitrary platform_
+_but upcoming changes are likely to expand the configuration syntax._
 
 ## Support
 
