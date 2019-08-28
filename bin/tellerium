@@ -8,9 +8,16 @@ const yargs = require("yargs");
 const tellerium = require("../lib/index");
 
 const argvToOptions = argv => {
-  if (argv.selenium) {
+  if (argv.selenium || argv.browserstack) {
+    const adapterOptions = {};
+
+    if (argv.browserstack) {
+      adapterOptions.browserStack = true;
+    }
+
     return {
-      adapter: "selenium"
+      adapter: "selenium",
+      adapterOptions
     };
   } else if (argv.ramble) {
     return {
@@ -39,6 +46,10 @@ const attemptExecuteHook = (instance, hookName) => {
 exports.execute = ({ filePath, format, timeout }, argv) => {
   const mocha = new Mocha({});
   mocha.ui("exports");
+
+  // browserstack is used increase the default timeout to 1 minute
+  timeout = argv.browserstack && timeout === 10000 ? 60000 : timeout;
+
   mocha.timeout(timeout);
 
   const options = argvToOptions(argv);
@@ -106,9 +117,14 @@ const configureArgs = () => yargs =>
       type: "boolean",
       describe: "Execute with selenium webdriver."
     })
+    .option("browserstack", {
+      type: "boolean",
+      describe: "Execute with browserstack."
+    })
     .conflicts({
       ramble: "selenium",
-      selenium: "ramble"
+      selenium: "ramble",
+      browserstack: "ramble"
     });
 
 const processArgs = () =>
